@@ -38,17 +38,18 @@ while(playerHealth > 0 && enemyHealth > 0) {
       if (confirmSkip) {
         window.alert(playerName + " has decided to skip this fight. Goodbye!");
         // subtract money from player for skipping
-        playerMoney = playerMoney - 10;
+        playerMoney = Math.max(0, playerMoney - 10);
         console.log("playerMoney", playerMoney);
         break;
       }
     }
     
 // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemyHealth = enemyHealth - playerAttack;
-    console.log(
-      playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
-    );
+    var damage = randomNumber(playerAttack - 3, playerAttack);
+    enemyHealth = Math.max(0, enemyHealth - damage);
+    //console.log(
+      //playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+    //);
     
   
 // check enemy's health
@@ -63,10 +64,11 @@ while(playerHealth > 0 && enemyHealth > 0) {
     }
   
 // remove player's health by subtracting the amount set in the enemyAttack variable
-    playerHealth = playerHealth - enemyAttack;
-    console.log(
-      enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
-    );
+    var damage = (enemyAttack - 3, enemyAttack);
+    playerHealth = Math.max(0, playerHealth - damage);
+    //console.log(
+      //enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+    //);
   
 // check player's health
     if (playerHealth <= 0) {
@@ -77,6 +79,12 @@ while(playerHealth > 0 && enemyHealth > 0) {
       window.alert(playerName + " still has " + playerHealth + " health left.");
     }
   }
+};
+
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return value;
 };
     
 // function to start new game
@@ -90,7 +98,7 @@ for (var i = 0; i < enemyNames.length; i++) {
   if (playerHealth > 0) {
   window.alert ("Welcome to robot-gladiators! Round " + ( i + 1 ));
   var pickedEnemyName = enemyNames[i];
-  enemyHealth = 50;
+  enemyHealth = randomNumber(40, 60);
   fight(pickedEnemyName);
 
 if (playerHealth > 0 && i < enemyNames.length - 1) {
